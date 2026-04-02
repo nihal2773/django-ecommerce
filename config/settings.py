@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='DATABASE_URL')
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
 
 CLOUDINARY_URL = config('CLOUDINARY_URL')
