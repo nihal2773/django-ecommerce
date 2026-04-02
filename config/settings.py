@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://syera_mini_mart_user:b3kt0AtprpNkEIQihfoA1bcg277g7ZDl@dpg-d76dmppr0fns73c86mvg-a.singapore-postgres.render.com/syera_mini_mart')
+    'default': dj_database_url.config(default='DATABASE_URL')
 }
 
 # Password validation
