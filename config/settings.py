@@ -31,7 +31,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://django-backend-2bnc.onrender.com']
 
 REST_FRAMEWORK = { 
         'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django_filters',
     'cloudinary',
     'cloudinary_storage',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -70,7 +71,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'config.urls'
 
