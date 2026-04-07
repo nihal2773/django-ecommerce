@@ -10,10 +10,12 @@ class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
         fields = ['id', 'product', 'product_id', 'quantity']
+        total = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
+        item_count = serializers.IntegerField(read_only=True)
     
 class CartSerializer(serializers.ModelSerializer):
     items = CartItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Cart
-        fields = ['id', 'user', 'items', 'created_at']
+        fields = ['id', 'user', 'items', 'total', 'item_count', 'created_at']

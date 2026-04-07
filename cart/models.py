@@ -9,7 +9,7 @@ class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"Cart - {self.user.username}"
     
 class CartItem(models.Model):
@@ -17,5 +17,5 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.product.name} ({self.quantity})"

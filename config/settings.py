@@ -33,15 +33,20 @@ DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
-REST_FRAMEWORK = { 
-        'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT only
     ),
-        'DEFAULT_FILTER_BACKEND': ['django_filters.rest_framework.DjangoFilterBackend']
-    }
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],  # note: BACKENDS not BACKEND
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+}
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME' : timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,  # rotate on every refresh for security
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 # Application definition
 

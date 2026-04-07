@@ -2,13 +2,13 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000',
 });
 
-// Attach token to every request
+// Request interceptor — runs fresh on EVERY request
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('access_token');
+    const token = localStorage.getItem('access_token'); // read per-request, not once
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -17,7 +17,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Handle token expiry automatically
+// Response interceptor — handle token expiry
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -40,7 +40,7 @@ api.interceptors.response.use(
         );
         localStorage.setItem('access_token', data.access);
         original.headers.Authorization = `Bearer ${data.access}`;
-        return api(original);
+        return api(original); // retry the original request
       } catch {
         localStorage.clear();
         window.location.href = '/login';
